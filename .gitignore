@@ -1,0 +1,5 @@
+.vscode
+wenv/
+__pycache__/
+#thing.config.json
+#thing.data.json

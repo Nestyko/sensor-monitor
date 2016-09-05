@@ -1,0 +1,63 @@
+{
+    "name": "Nestor Main PC",
+    "createdAt": "2016-09-05T21:42:39.233Z",
+    "ip": "192.168.0.107",
+    "sensors": [
+        {
+            "name": "CPU #1",
+            "id": 1,
+            "lastMeasure": {},
+            "type": "cpu",
+            "timeout": 300000,
+            "createdAt": "2016-09-05T21:43:34.719Z",
+            "alert": false,
+            "updatedAt": "2016-09-05T21:43:34.719Z",
+            "thing": 1
+        },
+        {
+            "name": "CPU #2",
+            "id": 2,
+            "lastMeasure": {},
+            "type": "cpu",
+            "timeout": 300000,
+            "createdAt": "2016-09-05T21:43:35.212Z",
+            "alert": false,
+            "updatedAt": "2016-09-05T21:43:35.212Z",
+            "thing": 1
+        },
+        {
+            "name": "CPU #3",
+            "id": 3,
+            "lastMeasure": {},
+            "type": "cpu",
+            "timeout": 300000,
+            "createdAt": "2016-09-05T21:43:35.738Z",
+            "alert": false,
+            "updatedAt": "2016-09-05T21:43:35.738Z",
+            "thing": 1
+        },
+        {
+            "name": "CPU #4",
+            "id": 4,
+            "lastMeasure": {},
+            "type": "cpu",
+            "timeout": 300000,
+            "createdAt": "2016-09-05T21:43:36.253Z",
+            "alert": false,
+            "updatedAt": "2016-09-05T21:43:36.253Z",
+            "thing": 1
+        }
+    ],
+    "updatedAt": "2016-09-05T21:42:39.243Z",
+    "alert": false,
+    "groups": [
+        {
+            "name": "Nestor's Home",
+            "createdAt": "2016-09-05T21:37:55.642Z",
+            "id": 1,
+            "updatedAt": "2016-09-05T21:37:55.642Z"
+        }
+    ],
+    "mac": "50:46:5d:4f:08:c4",
+    "id": 1
+}

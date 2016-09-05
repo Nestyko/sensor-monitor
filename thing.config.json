@@ -1,0 +1,11 @@
+{
+    "user_id": 1,
+    "base_url": "http://63d91421.ngrok.io",
+    "email": "nltobon@gmail.com",
+    "lang": "spa",
+    "password": "31081994",
+    "jwt": {
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxfHVuZGVmaW5lZCIsInN1YiI6InN1YmplY3QiLCJhdWQiOiJhcHAgbmFtZSIsImV4cCI6MTQ3MzcxNjUyMTM2NiwibmJmIjoxNDczMTExNzIxMzY5LCJpYXQiOjE0NzMxMTE3MjEzNjksImp0aSI6Ijk0MmMwZmEwLTczYjEtMTFlNi05NzRlLWVkMjAzMTRiZmNiOSJ9.rj0fQ0mE5H2ajc7K9o0J3HEGJQPLfQBOqkF5l9vRu44",
+        "expires": 1473716521366
+    }
+}
