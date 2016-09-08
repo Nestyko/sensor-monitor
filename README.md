@@ -18,9 +18,9 @@ Its recomended to create a virtualenv but its not needed
 ```
 #!bash
 
-$ virtualenv venv
-$ source venv/bin/activate # bash
-$ venv/Scripts/activate # windows
+ virtualenv venv
+ source venv/bin/activate # bash
+ venv/Scripts/activate # windows
 ```
 Then install the dependencies
 
@@ -28,7 +28,7 @@ Then install the dependencies
 ```
 #!bash
 
-$ pip install -r requirements.txt
+ pip install -r requirements.txt
 ```
 
 Then the script can be run
