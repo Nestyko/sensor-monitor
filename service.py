@@ -46,3 +46,6 @@ class Service:
         if 'sensors' in self.thing:
             return self.thing['sensors']
         return []
+
+    def get_groups(self, user):
+        pass

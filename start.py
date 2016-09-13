@@ -19,24 +19,26 @@ base_url = conf['base_url']
 
 def input_group(groups):
     group_selection_message = {
-        'spa': 'Seleccione los grupos (separados por "," ): ',
-        'eng': 'Select groups (separated by ","): '
+        'spa': 'Seleccione grupo: ',
+        'eng': 'Select group: '
     }
 
     group_ids = []
     for group in groups:
-        group_ids.append(str(group['id']))
+        group_ids.append(group['id'])
         print(str(group['id']) + ' .- ' + str(group['name']) )
     selection = 0
     right_selection = False
     while not right_selection:
         selection = input(group_selection_message[lang])
-        selection = selection.strip().split(',')
+        try:
+            selection = int(selection)
+        except Exception:
+            continue
         pprint(selection)
         right_selection = True
-        for x in selection:
-            if not x in group_ids:
-                right_selection = False
+        if not selection in group_ids:
+            right_selection = False              
     return selection
 
 
@@ -84,7 +86,7 @@ def prompt_thing_info():
         confirmation = input(name_confirmation_message[lang])
     thing.name = thing_name
     groups_ids = input_group(groups)
-    thing.groups = groups_ids
+    thing.group = groups_ids
     pprint(thing.__dict__)
     response = thing.register()
     if 'status_code' in response and response.status_code == 200 or 201:
@@ -106,9 +108,7 @@ thing = Thing()
 print('ip: ' + str(thing.ip))
 print('macs: ' + str(thing.macs))
 
-res = requests.get(base_url+'/user/' + str(conf['user_id']) + '/groups')
-
-groups = res.json()
+groups = auth.getAdminGroups()
 
 pprint(groups)
 allThings = []

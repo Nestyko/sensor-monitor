@@ -49,9 +49,16 @@ lang = config['lang']
 class Authentication:
 
     def __init__(self):
-        
-        self.email = config['email']
-        self.password = config['password']
+        self.id = None
+        if 'user_id' in config:
+            self.id = config['user_id']
+        self.email = None
+        if 'email' in config:
+            self.email = config['email']
+        self.password = None
+        if 'password' in config:
+            self.password = config['password']
+        self.s = requests.Session()
         self.jwt = None
         if 'jwt' in config and 'token' in config['jwt']:
             self.jwt = config['jwt']['token']
@@ -59,6 +66,7 @@ class Authentication:
         if self.jwt and self.jwt != '':
             #Validate jwt
             self.is_auth = True
+            self.s.headers.update({'access_token': self.jwt})
         else:
             self.promp_login()
             
@@ -103,21 +111,35 @@ class Authentication:
                 'email': self.email,
                 'password': self.password
             }
-            s = requests.Session()
-            res = s.post(config['base_url']+'/auth/login', data=user, timeout=5)
+            res = self.s.post(config['base_url']+'/auth/login', data=user, timeout=5)
         except TimeoutError:
             print(timeout_error_message[lang])
+            return False
         except Exception:
             print(connection_error_message[lang])
+            return False
         if(res.status_code == 200):
-            jwt_res = s.get(config['base_url']+'/user/jwt')
+            self.id = res.json()['id']
+            jwt_res = self.s.get(config['base_url']+'/user/jwt')
             self.jwt = jwt_res.json()
-            save_data(self.jwt, res.json()['id'])
+            self.s.headers.update({'access_token': self.jwt})
+            save_data(self.jwt, self.id)
             return res.json()
         return False
     
 
-    def user_id(self):
-        if not self.auth:
-            return None
-        return self.auth['id']
+    def getAdminGroups(self):
+        if not self.id:
+            print('Error no id found for the user, please login first')
+            return []
+        res = self.s.get(config['base_url']+'/grouppermission', params={'user': self.id})
+        if res.status_code != 200:
+            return []
+        groups = res.json()
+        admin_group_ids = [ g['id'] for g in groups if 'admin' in g['permissions']]
+        groups = []
+        for id in admin_group_ids:
+            groups.append(self.s.get(config['base_url']+'/group/'+ str(id)).json())
+        return groups
+
+

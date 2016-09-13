@@ -20,7 +20,7 @@ class Thing:
         self.macs = self.getMacs()
         self.alert = None
         self.sensors = []
-        self.groups = []
+        self.group = None
         self.thing = None
 
     def __str__(self):
