@@ -1,11 +1,11 @@
 {
+    "base_url": "http://localhost:1337",
     "user_id": 1,
-    "base_url": "http://63d91421.ngrok.io",
+    "password": "31081994",
     "email": "nltobon@gmail.com",
     "lang": "spa",
-    "password": "31081994",
     "jwt": {
-        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxfHVuZGVmaW5lZCIsInN1YiI6InN1YmplY3QiLCJhdWQiOiJhcHAgbmFtZSIsImV4cCI6MTQ3MzcxNjUyMTM2NiwibmJmIjoxNDczMTExNzIxMzY5LCJpYXQiOjE0NzMxMTE3MjEzNjksImp0aSI6Ijk0MmMwZmEwLTczYjEtMTFlNi05NzRlLWVkMjAzMTRiZmNiOSJ9.rj0fQ0mE5H2ajc7K9o0J3HEGJQPLfQBOqkF5l9vRu44",
-        "expires": 1473716521366
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxfHVuZGVmaW5lZCIsInN1YiI6InN1YmplY3QiLCJhdWQiOiJhcHAgbmFtZSIsImV4cCI6MTQ3NDMyNTA0MTg0OCwibmJmIjoxNDczNzIwMjQxODQ5LCJpYXQiOjE0NzM3MjAyNDE4NDksImp0aSI6IjY2YTQ1YTkwLTc5M2EtMTFlNi04ZTUwLWRiY2QwYzhmYjlmOCJ9.XjEnJvBB4j0bQlYKosoyyf0KdM-VbhHqya2m__GhtBE",
+        "expires": 1474325041848
     }
 }
