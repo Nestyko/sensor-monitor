@@ -2,6 +2,7 @@ from rx.subjects import Subject
 import requests
 import socket
 import json
+from service import Service
 
 import netifaces as nif
 
@@ -22,18 +23,16 @@ class Thing:
         self.sensors = []
         self.group = None
         self.thing = None
+        self.service = Service()
 
     def __str__(self):
         return str(self.id) + ' ' + self.name
 
     def find_self(self, allThings):
-        thing = load_thing()
-        if thing:
-            self.thing = thing
-            return self.thing
         for thing in allThings:
             if 'mac' in thing and thing['mac'] in self.macs:
                 self.thing = thing
+                self.service.setThing(thing)
                 return thing
         return None
 
@@ -53,12 +52,15 @@ class Thing:
             except Exception:
                 count += 1
                 continue
-        self.save_to_disk(thing_response)
+        self.save_to_disk(thing_response=thing_response)
         return thing_response
         
-    def save_to_disk(self, thing_response):
+    def save_to_disk(self, thing_response=None):
         with open('thing.data.json', 'w') as outfile:
-            json.dump(thing_response.json(), outfile, ensure_ascii=False, indent=4)
+            if thing_response:
+                json.dump(thing_response.json(), outfile, ensure_ascii=False, indent=4)
+            else:
+                json.dump(self.thing, outfile, ensure_ascii=False, indent=4)
     
     def getMacs(self):
         macs = []
@@ -81,7 +83,7 @@ class Thing:
             ip = socket.gethostbyname(socket.getfqdn())
         return ip
 
-    def update_thing(self):
+    def update_thing(self, thingId):
         if not self.thing:
             thing = load_thing()
             if thing:
@@ -89,5 +91,9 @@ class Thing:
         r = requests.get(
             base_url+'/thing/'+self.thing['id'],
             headers={'access_token': conf['jwt']['token']})
-        self.thing = r.json()
+        if(r.status_code == 200):
+            self.thing = r.json()
+            self.save_to_disk();
+        else:
+            print('Error updating the thing')
 

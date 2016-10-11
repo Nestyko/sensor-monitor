@@ -1,6 +1,7 @@
 from config import load_config, save_data
 import getpass
 import requests
+import json
 
 
 no_auth_info_message = {
@@ -41,6 +42,11 @@ password_error_message = {
 welcome_message = {
     'spa': 'Bienvenido',
     'eng': 'Welcome'
+}
+
+admin_groups_error_message = {
+    'spa': 'Error obteniendo los grupos',
+    'eng': 'Error getting the groups'
 }
 
 config = load_config() 
@@ -136,10 +142,9 @@ class Authentication:
         if res.status_code != 200:
             return []
         groups = res.json()
-        admin_group_ids = [ g['id'] for g in groups if 'admin' in g['permissions']]
-        groups = []
-        for id in admin_group_ids:
-            groups.append(self.s.get(config['base_url']+'/group/'+ str(id)).json())
+        admin_groups = [ g['group'] for g in groups if g['permissions'] and 'admin' in g['permissions']]
+        return admin_groups
+        print(groups)
         return groups
 
 

@@ -126,5 +126,5 @@ if not found:
     prompt_thing_info()
 
 
-m = Monitor()
+m = Monitor(found['id'])
 m.start()
