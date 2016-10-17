@@ -1,6 +1,7 @@
 import requests
 from pprint import pprint
 from config import load_config, load_thing, update_thing
+from Auth import Authentication
 
 class Service:
 
@@ -12,6 +13,24 @@ class Service:
         self.s.headers.update({'access_token': conf['jwt']['token']})
         if thing_id:
             self.thing = self.getThing(thing_id)
+
+    def validateJwt(self):
+        user_id = ''
+        try:
+            user_id = '/'+ conf['user_id']
+        except Exception:
+            pass
+        dummy = self.s.get('/user'+user_id)
+        if dummy.status_code == 403:
+            auth = Authentication()
+            if auth.is_auth:
+                return True
+            else:
+                return False
+        elif dummy.status_code == 200:
+            return True
+        else:
+            return False
     
     def send_measure(self, measure):
         self.s.post(
@@ -29,6 +48,9 @@ class Service:
         res = self.s.get(self.base_url+'/thing/{}'.format(id))
         if(res.status_code == 200):
             return res.json()
+        elif(res.status_code == 403):
+            #JWT expired
+            self.validateJwt()
         elif(res.status_code == 404):
             #Definetely deleted
             print('404')

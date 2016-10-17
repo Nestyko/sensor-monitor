@@ -1,11 +1,7 @@
 {
     "email": "nltobon@gmail.com",
-    "user_id": 1,
-    "password": "31081994",
+    "password": "",
     "base_url": "http://localhost:1337",
-    "lang": "spa",
-    "jwt": {
-        "expires": 1476627406686,
-        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxfHVuZGVmaW5lZCIsInN1YiI6InN1YmplY3QiLCJhdWQiOiJhcHAgbmFtZSIsImV4cCI6MTQ3NjYyNzQwNjY4NiwibmJmIjoxNDc2MDIyNjA2Njg3LCJpYXQiOjE0NzYwMjI2MDY2ODcsImp0aSI6IjAzMDY2ZWYwLThlMmItMTFlNi05MTQ4LWY5OTdmZTk5NjQ2NiJ9.o2l72MHYuwrY0tKWuouYbUta_4Du707Tt3xP2bZ7YxU"
-    }
+    "user_id": 1,
+    "lang": "spa" // eng || spa
 }

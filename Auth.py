@@ -71,14 +71,22 @@ class Authentication:
         self.is_auth = False
         if self.jwt and self.jwt != '':
             #Validate jwt
-            self.is_auth = True
-            self.s.headers.update({'access_token': self.jwt})
+            res = self.s.get(config['base_url']+'/user/'+str(self.id))
+            if res.status_code == 403:
+                #Renew jwt
+                self.promp_login()
+            elif res.status_code >= 400:
+                print('error on authentication')
+                quit()
+            elif res.status_code < 400:
+                self.is_auth = True
+                self.s.headers.update({'access_token': self.jwt})
         else:
             self.promp_login()
-            
+
     def greetings(self, lang='spa'):
         return welcome_message[lang] + " " + self.email
-        
+
 
     def promp_login(self):
         if self.email == '' or self.password == '':
@@ -128,7 +136,7 @@ class Authentication:
             self.id = res.json()['id']
             jwt_res = self.s.get(config['base_url']+'/user/jwt')
             self.jwt = jwt_res.json()
-            self.s.headers.update({'access_token': self.jwt})
+            self.s.headers.update({'access_token': self.jwt['token']})
             save_data(self.jwt, self.id)
             return res.json()
         return False
