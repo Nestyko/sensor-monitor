@@ -135,9 +135,10 @@ class Authentication:
         if(res.status_code == 200):
             self.id = res.json()['id']
             jwt_res = self.s.get(config['base_url']+'/user/jwt')
-            self.jwt = jwt_res.json()
-            self.s.headers.update({'access_token': self.jwt['token']})
-            save_data(self.jwt, self.id)
+            jwt = jwt_res.json()
+            self.s.headers.update({'access_token': jwt['token']})
+            save_data(jwt, self.id)
+            self.jwt = jwt
             return res.json()
         return False
     

@@ -1,7 +1,15 @@
 {
     "email": "nltobon@gmail.com",
-    "password": "",
-    "base_url": "http://localhost:1337",
     "user_id": 1,
-    "lang": "spa" // eng || spa
+    "jwt": {
+        "expires": 1478568414030,
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxfHVuZGVmaW5lZCIsInN1YiI6InN1YmplY3QiLCJhdWQiOiJhcHAgbmFtZSIsImV4cCI6MTQ3ODU2ODQxNDAzMCwibmJmIjoxNDc3OTYzNjE0MDMxLCJpYXQiOjE0Nzc5NjM2MTQwMzEsImp0aSI6IjQ1OGViZGYwLTlmZDItMTFlNi1hZjMwLTFkMTViMDlhMTAyNiJ9.Y97mNzA5LxzkEzUIYAsvMjhh633yg8Fqk9RAeIdAslo"
+    },
+    "password": "31081994",
+    "base_url": "http://localhost:1337",
+    "thing": {
+        "group": 1,
+        "name": "Nestor PC"
+    },
+    "lang": "spa"
 }

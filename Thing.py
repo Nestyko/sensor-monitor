@@ -1,4 +1,3 @@
-from rx.subjects import Subject
 import requests
 import socket
 import json
@@ -22,8 +21,9 @@ class Thing:
         self.alert = None
         self.sensors = []
         self.group = None
-        self.thing = None
         self.service = Service()
+        self.thing = None
+
 
     def __str__(self):
         return str(self.id) + ' ' + self.name
@@ -43,13 +43,14 @@ class Thing:
         thing = self.__dict__
         thing['mac'] = thing['macs'][0]
         thing['macs'] = None
-        s = requests.Session()
-        s.headers.update({'access_token': conf['jwt']['token']})
+        thing['service'] = None
+        s = Service().s
         while count < 3:
             try:
                 thing_response = s.post( str(base_url+'/thing') , data=thing, timeout=5)
                 break
-            except Exception:
+            except Exception as e:
+                print(e)
                 count += 1
                 continue
         self.save_to_disk(thing_response=thing_response)

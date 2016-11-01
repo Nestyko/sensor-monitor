@@ -31,3 +31,18 @@ def load_thing():
 def update_thing(new_thing):
     with open(thing_data_path, mode='w') as conf_file:
         json.dump(new_thing, conf_file, indent=4, ensure_ascii=False)
+
+
+def get_thing_name():
+    data = load_config()
+    if 'thing' in data:
+        if 'name' in data['thing']:
+            return data['thing']['name']
+    return None
+
+def get_group_id():
+    data = load_config()
+    if 'thing' in data:
+        if 'group' in data['thing']:
+            return data['thing']['group']
+    return None

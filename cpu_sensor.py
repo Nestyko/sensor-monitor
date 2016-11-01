@@ -15,7 +15,7 @@ class CpuSensor(threading.Thread):
         self.interval = 5 #seconds
         num_of_cores = psutil.cpu_count()
         self.service = service
-        self.unit = self.service.get_unit('Percentage')
+        self.unit = self.service.get_unit('Percentage', abbreviation='%', unit_type='percentage')
         for x in range(1,num_of_cores+1):
             created = False
             for sensor in sensors:
@@ -47,7 +47,11 @@ class CpuSensor(threading.Thread):
                         'unit' : self.unit['id'],
                         'value': val
                     }
-                    pprint(measure)
+                    print('{name}: {value}{unit}'.format(
+                        name=self.sensors[index]['name'],
+                        value=val,
+                        unit=self.unit['abbreviation']
+                    ))
                     self.service.send_measure(measure)
                 
             counter += 1

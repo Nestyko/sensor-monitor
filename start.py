@@ -1,8 +1,8 @@
-from config import load_config
+from config import load_config, get_group_id, get_thing_name
 from Auth import Authentication
 import requests
 from Thing import Thing
-
+from connection_service import is_server_up
 from monitor import Monitor
 
 
@@ -42,7 +42,7 @@ def input_group(groups):
     return selection
 
 
-def prompt_thing_info():
+def prompt_thing_info(thing_name = None, group_id = None):
     not_registered_machine_message = {
         'spa': 'Este equipo no esta registrado en ninguno de sus grupos',
         'eng': 'This equipment is not registered in any of your groups'
@@ -72,31 +72,44 @@ def prompt_thing_info():
         'eng': 'Equipment could not be registered'
     }
 
-    print(not_registered_machine_message[lang])
-    
-    confirmation = ''
-    while not confirmation.strip() in ['y', 's', 'n']:
-        confirmation = input(register_confirmation_message[lang])
-    if confirmation == 'n':
-        quit()
-    confirmation = ''
-    while not confirmation.strip() in ['y', 's', 'n']:
-        thing_name = input(enter_name_message[lang])
-        print(this_is_the_name_message[lang] + thing_name)
-        confirmation = input(name_confirmation_message[lang])
+    if not thing_name:
+        print(not_registered_machine_message[lang])
+
+        confirmation = ''
+        while not confirmation.strip() in ['y', 's', 'n']:
+            confirmation = input(register_confirmation_message[lang])
+        if confirmation == 'n':
+            quit()
+        confirmation = ''
+        while not confirmation.strip() in ['y', 's', 'n']:
+            thing_name = input(enter_name_message[lang])
+            print(this_is_the_name_message[lang] + thing_name)
+            confirmation = input(name_confirmation_message[lang])
     thing.name = thing_name
-    groups_ids = input_group(groups)
-    thing.group = groups_ids
+    if not group_id:
+        group_id = input_group(groups)
+    thing.group = group_id
     pprint(thing.__dict__)
     response = thing.register()
-    if 'status_code' in response and response.status_code == 200 or 201:
+    if response and 'status_code' in response and response.status_code == 200 or 201:
         print(equipment_successful_message[lang])
         pprint(response.json())
+        return response.json()
     else:
         print(equipment_register_error[lang])
+        quit()
 
+
+no_server_error_message = {
+    'spa': 'No se pudo conectar con el servidor',
+    'eng': 'Cannot connect to server'
+}
 
 """This is where it begins"""
+
+if not is_server_up():
+    print(no_server_error_message[lang])
+    quit()
 
 auth = Authentication()
 
@@ -123,7 +136,9 @@ found = thing.find_self(allThings)
 
 
 if not found:
-    prompt_thing_info()
+    thing_name = get_thing_name()
+    group_id = get_group_id()
+    found = prompt_thing_info(thing_name = thing_name, group_id = group_id)
 
 
 m = Monitor(found['id'])

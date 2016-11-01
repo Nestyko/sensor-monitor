@@ -2,6 +2,7 @@ import requests
 from pprint import pprint
 from config import load_config, load_thing, update_thing
 from Auth import Authentication
+import os
 
 class Service:
 
@@ -54,7 +55,7 @@ class Service:
         elif(res.status_code == 404):
             #Definetely deleted
             print('404')
-            quit()
+            os._exit(1)
         else:
             #One posible thing happening here is the deleting of the Thing
             print('Error getting the thing')
@@ -86,15 +87,18 @@ class Service:
             return r.json()   
         return None
 
+
     def get_unit(self, unit_name, abbreviation=None, unit_type=None):
+        """Gets the unit with the specified name, or creates the unit but the abbreviation and the type must be provided """
         r = self.s.get(
             self.base_url+'/unit',
             params={'name': unit_name}
         )
-        if r.status_code == 200:
+        if r.status_code == 200 and len(r.json()):
             return r.json()[0]
         else:
             if not unit_type:
+                print('No unit found')
                 return
             data = {
                     'name': unit_name,
